@@ -4,4 +4,4 @@ library(data.table)
 library(dplyr)
 
 #Import database
-recipes = fread(file = "./data/recipes.csv", stringsAsFactors = F)
+recipes = fread(file = "../epicurious_final.csv", stringsAsFactors = F)

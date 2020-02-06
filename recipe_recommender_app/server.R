@@ -32,8 +32,8 @@ function(input, output) {
       filter(., grepl(ingredient1, ingredients, ignore.case = T)) %>%
       filter(., grepl(ingredient2, ingredients, ignore.case = T)) %>%
       filter(., grepl(ingredient3, ingredients, ignore.case = T)) %>% 
-      select(., recipe, url, rating) %>% 
-      arrange(., desc(rating)) %>% 
+      select(., Recipe = recipe, Link = url, Rating = rating) %>% 
+      arrange(., desc(Rating)) %>% 
       head(., n = as.integer(input$recipenumber))
   })
  
