@@ -37,7 +37,7 @@ dashboardPage(skin = "red",
       tabItem(tabName = "recipes",
               #Row that contains summary info boxes displaying most murderous state and the average murders (both in murders/1000 people)
               fluidRow(
-                box(width = 3,
+                box(width = 4,
                   column(12,
                        selectizeInput("mealtype", label = "Which Meal Are You Making?", choices = c("All", "Breakfast", "Lunch", "Dinner")),
                        textInput("recipenumber", label = "How Many Choices Would You Like?", value = 5),
@@ -45,7 +45,7 @@ dashboardPage(skin = "red",
                        textInput("ingredient1", label = "First Ingredient?"),
                        textInput("ingredient2", label = "Second Ingredient?"),
                        textInput("ingredient3", label = "Third Ingredient?"))),
-                box(width = 9,
+                box(width = 8,
                 column(12,
                        tableOutput("table")))
               )),

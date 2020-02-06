@@ -9,6 +9,14 @@ function(input, output) {
       mealtype = input$mealtype
     }
     
+    if(input$numingredients == ""){
+      numingredients = ""}
+    else{
+      numingredients = input$numingredients
+    }
+    
+    print(numingredients)
+    
     if(input$ingredient1 == ""){
       ingredient1 = ""}
     else{
@@ -32,12 +40,14 @@ function(input, output) {
       filter(., grepl(ingredient1, ingredients, ignore.case = T)) %>%
       filter(., grepl(ingredient2, ingredients, ignore.case = T)) %>%
       filter(., grepl(ingredient3, ingredients, ignore.case = T)) %>% 
-      select(., Recipe = recipe, Link = url, Rating = rating) %>% 
-      arrange(., desc(Rating)) %>% 
+      filter(., ingredients_length <= round(as.numeric(numingredients, digits = 0))) %>% 
+      mutate(., Recipe = paste0("<a href =",url,">",recipe,"</a>"), `Number of Ingredients` = as.character(ingredients_length)) %>% 
+      select(., Recipe, Rating = rating, `Make Again Percentage` = make_again, `Number of Ingredients`) %>% 
+      arrange(., desc(Rating), desc(`Make Again Percentage`)) %>% 
       head(., n = as.integer(input$recipenumber))
   })
  
-  output$table = renderTable({recipe_df()}, sanitize.text.function = function(x) x)
+  output$table = renderTable({recipe_df()},  align = 'c', sanitize.text.function = function(x) x)
   
 }
   
