@@ -103,7 +103,8 @@ ratings_by_cuisine = recipes_by_cuisine.mean()['rating'].reset_index().sort_valu
     'rating', ascending = False)
 ratines_by_cuisine = ratings_by_cuisine.loc[ratings_by_cuisine['cuisine'] != 'Unknown']
 plt.subplots(figsize = (8, 10))
-sns.barplot(data = ratings_by_cuisine, y = 'cuisine', x = 'rating', color = "#cf625d")
+sns.barplot(data = ratings_by_cuisine, y = 'cuisine', x = 'rating', color = "#cf625d").set(
+    title = "Average Recipe Rating by Cuisine Type", xlabel = "Average Rating", ylabel = "Cuisine")
 plt.savefig('graphs/ratingbycuisine.pdf', bbox_inches='tight')
 
 # Remove cuisines with too few recipes (less than 50) and re-graph the remaining cuisines' average rating
@@ -113,7 +114,8 @@ filtered_recipe_cuisines = pd.DataFrame(
 filtered_recipe_cuisines = filtered_recipe_cuisines.merge(
     ratings_by_cuisine, on = "cuisine", how = 'left').sort_values('rating', ascending = False).loc[filtered_recipe_cuisines['cuisine'] != 'Unknown']
 plt.subplots(figsize = (8, 10))
-sns.barplot(data = filtered_recipe_cuisines , y = 'cuisine', x = 'rating', color = "#cf625d")
+sns.barplot(data = filtered_recipe_cuisines , y = 'cuisine', x = 'rating', color = "#cf625d").set(
+    title = "Average Recipe Rating by Cuisine Type", xlabel = "Average Rating", ylabel = "Cuisine")
 plt.savefig('graphs/ratingbycuisine_filtered.pdf', bbox_inches='tight')
 
 
@@ -122,22 +124,22 @@ restaurant_and_recipe_cuisinecount = recipe_cuisines.merge(rest_cuisines, on = "
 plt.subplots(figsize = (8, 15))
 tidy = restaurant_and_recipe_cuisinecount.melt(id_vars='Cuisine').rename(columns=str.title).sort_values('Value', ascending = False)
 sns.barplot(data = tidy, x = "Value", y = "Cuisine", hue = "Variable").set(
-	title = "Cuisine Breakdown: Recipes & Restaurants", xlabel = "Percentage")
+    title = "Cuisine Breakdown: Recipes & Restaurants", xlabel = "Percentage")
 plt.savefig('graphs/reciperestaurantcuisines.pdf', bbox_inches='tight')
 
 # Visualize distribution of number of ingredients
 sns.distplot(recipes["ingredients_length"], kde = False, hist_kws=dict(alpha=0.8)).set(
-	xlabel="Number of Ingredients", title = "Distribution of Ingredient Number")
+    xlabel="Number of Ingredients", title = "Distribution of Ingredient Number")
 plt.savefig('graphs/ingredientnumberdist.pdf', bbox_inches='tight')
 
 # Visualize distribution of number of ingredients by rating
-sns.boxplot(y = 'ingredients_length', x = 'rating', data = recipes_correlation2, color = "#cf625f").set(
+sns.boxplot(y = 'ingredients_length', x = 'rating', data = recipes_correlation, color = "#cf625f").set(
     title = "Distrubtion of Ingredients by Rating", xlabel = "Rating", ylabel = "Number of Ingredients")
 plt.savefig('graphs/ingredientnumberdistbyrating.pdf', bbox_inches='tight')
 
 # Visualize correlation between rating - all recipes
 sns.lmplot("rating", "ingredients_length", recipes_correlation).set(
-	title = "Rating vs. Number of Ingredients", xlabel = "Rating", ylabel = "Number of Ingredients")
+    title = "Rating vs. Number of Ingredients", xlabel = "Rating", ylabel = "Number of Ingredients")
 plt.savefig('graphs/ratingvsingredientsnumber.pdf', bbox_inches='tight')
 
 
